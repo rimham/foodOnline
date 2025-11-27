@@ -76,6 +76,14 @@ class User(AbstractBaseUser):
     def has_module_perms ( self, app_label):
         return True
     
+    def get_role(self):
+        if self.role == 1:
+            user_role = 'Vendor'
+        elif self.role == 2:
+            user_role = 'Customer'
+        return user_role
+
+    
 class UserProfile(models.Model):
     user = OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, related_name='user_profile')
     profile_picture = models.ImageField(upload_to='user/profile_picture', blank=True, null=True)
@@ -96,3 +104,4 @@ class UserProfile(models.Model):
         return "No User Assigned"
 
 
+  
