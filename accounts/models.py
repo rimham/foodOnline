@@ -77,7 +77,7 @@ class User(AbstractBaseUser):
         return True
     
 class UserProfile(models.Model):
-    user = OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, related_name='user_profile')
     profile_picture = models.ImageField(upload_to='user/profile_picture', blank=True, null=True)
     cover_photo = models.ImageField(upload_to='user/pcover_photo', blank=True, null=True)
     adress_line_1 = models.CharField(max_length=50, blank=True, null=True)
@@ -91,5 +91,8 @@ class UserProfile(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.email
+        if self.user:
+            return self.user.email
+        return "No User Assigned"
+
 
